@@ -132,18 +132,11 @@ id unread;
     else if([@"displayMessageComposer" isEqualToString:call.method]) {
         NSString *message = call.arguments[@"message"];
         [Intercom presentMessageComposer:message];
-    } else if([@"sendTokenToIntercom" isEqualToString:call.method]){
-        NSString *token = call.arguments[@"token"];
-        if(token != (id)[NSNull null] && token != nil) {
-            NSData* encodedToken=[token dataUsingEncoding:NSUTF8StringEncoding];
-            [Intercom setDeviceToken:encodedToken];
-            result(@"Token set");
-        }
     }
     else if([@"sendTokenToIntercom" isEqualToString:call.method]) {
         NSString *token = call.arguments[@"token"];
-        if (token != nil) {
-            NSData * tokenData = [self dataFromHexString:token];
+        if(token != (id)[NSNull null] && token != nil) {
+            NSData *tokenData = [self dataFromHexString:token];
             [Intercom setDeviceToken:tokenData];
             result(@"Token sent to Intercom");
         }
